@@ -1,3 +1,3 @@
-module github.com/szaqal/GoMiscModules.git
+module github.com/szaqal/GoMiscModules
 
 go 1.12
