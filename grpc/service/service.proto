@@ -1,0 +1,14 @@
+syntax = "proto3";
+package model;
+
+service SomeService {
+	  rpc perform(InParams) returns (stream ServiceResponse) {}
+}
+
+message InParams {}
+
+message ServiceResponse {
+	  // 1,2 defines unique "tag"
+	    int32 id = 1;
+	      bool success = 2;
+}
