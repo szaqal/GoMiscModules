@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"log"
 
 	pb "github.com/szaqal/GoMiscModules/grpc/service"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 const (
@@ -13,7 +15,12 @@ const (
 )
 
 func main() {
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+
+	config := &tls.Config{
+		InsecureSkipVerify: true,
+	}
+
+	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(credentials.NewTLS(config)))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}

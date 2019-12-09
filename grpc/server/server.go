@@ -7,6 +7,7 @@ import (
 
 	pb "github.com/szaqal/GoMiscModules/grpc/service"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 const (
@@ -21,12 +22,13 @@ func (s *server) Perform(ctx context.Context, params *pb.InParams) (*pb.ServiceR
 }
 
 func main() {
+	creds, err := credentials.NewServerTLSFromFile("service.pem", "service.key")
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	// Creates a new gRPC server
-	s := grpc.NewServer()
+	s := grpc.NewServer(grpc.Creds(creds))
 
 	pb.RegisterSomeServiceServer(s, &server{})
 
